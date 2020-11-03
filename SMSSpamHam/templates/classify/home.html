@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Spam-Ham Classification</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src= "https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <style type="text/css">
+      .form{
+        display:none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Spam-Ham Classification</h1>
+      </div>
+      <form action="{% url 'result' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Select File:<input type="file" name="file"> -->
+        <div>
+          <input type="radio" name="options" value="message">Message
+          <input type="radio" name="options" value="file">File
+        </div>
+        <div class="file form">
+          {{ f_form.as_p }}
+        </div>
+        <div class="message form">
+          {{ m_form.as_p }}
+        </div>
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $('input[type="radio"]').click(function() {
+                    var inputValue = $(this).attr("value");
+                    var targetBox = $("." + inputValue);
+                    $(".form").not(targetBox).hide();
+                    $(targetBox).show();
+                });
+            });
+        </script>
+        <!-- Enter Message:
+        <textarea name="message" rows="8" cols="80"></textarea> -->
+        <input type="submit" name="submit" value="Predict" class="btn btn-primary btn-lg">
+      </form>
+    </div>
+  </body>
+</html>

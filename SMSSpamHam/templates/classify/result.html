@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Spam-Ham Classification</h1>
+      </div>
+      <hr color="blue" size=3>
+      <table>
+      {% for p in predictions %}
+        <tr>
+          {% for m in p %}
+            <td>{{m}}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+      </table>
+      <br>
+      <a href="{% url 'home' %}">
+        <button type="button" class="btn btn-danger">Check another!</button>
+      </a>
+    </div>
+  </body>
+</html>
