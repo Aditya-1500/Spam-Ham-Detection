@@ -4,11 +4,22 @@ from .SMS_Ham_Spam import pipeline
 import pandas as pd
 from .forms import getFile,getMessage
 
+def handle_uploaded_file(file):
+    predictions = []
+    with file.open() as f:
+        for line in f:
+            prediction = pipeline.predict([line])
+            predictions.append([line,prediction[0]])
+    return predictions
+
 # Create your views here.
 def HomeView(request):
+    return render(request,"home.html")
+
+def classify_spam_ham(request):
     f_form = getFile()
     m_form = getMessage()
-    return render(request,"classify/home.html",{'f_form':f_form,'m_form':m_form})
+    return render(request,"classify/classify_spam_ham.html",{'f_form':f_form,'m_form':m_form})
 
 def ResultView(request):
 
@@ -28,21 +39,3 @@ def ResultView(request):
     else:
         form = getFile()
         return render(request,"classify/result.html",context={'message':"Hello World",'prediction':"Checking"})
-
-# def ResultView(request):
-#     message = request.POST['message']
-#     try:
-#         file = request.FILES['file']
-#     except :
-#         print("File not found")
-#     prediction = pipeline.predict([message])
-#     return render(request,"classify/result.html",context={'message':message,'prediction':prediction[0]})
-
-
-def handle_uploaded_file(file):
-    predictions = []
-    with file.open() as f:
-        for line in f:
-            prediction = pipeline.predict([line])
-            predictions.append([line,prediction[0]])
-    return predictions

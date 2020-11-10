@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>New User</title>
+
+    {% load static %}
+  </head>
+  <body>
+    {% load bootstrap4 %}
+    <div class="container">
+      <h1>SignUp</h1>
+      <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">SignUp</button>
+      </form>
+    </div>
+  </body>
+</html>
