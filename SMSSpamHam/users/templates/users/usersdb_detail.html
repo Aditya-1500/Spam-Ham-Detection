@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+  </head>
+  <body>
+    {% load static %}
+    <div class="container">
+      <h1>Welcome {{usersdb.user.username}}</h1>
+      <hr size=3 color="blue">
+      <h2>Spam URLs</h2>
+      {% if spamurl_user.count == 0 %}
+        <p>File not added.</p>
+      {% else %}
+        <p>{{usersdb.spamurl_user}}</p>
+      {% endif %}
+
+      <h2>Ham/Spam Tweets</h2>
+      {% if hamspamtweets_user.count == 0 %}
+        <p>File not added.</p>
+      {% else %}
+        <p>{{usersdb.hamspamtweets_user}}</p>
+      {% endif %}
+
+      <h2>Spammy words and Users</h2>
+      {% if spammywordsusers_user.count == 0 %}
+        <p>File not added.</p>
+      {% else %}
+        <p>{{usersdb.spammywordsusers_user}}</p>
+      {% endif %}
+
+      <button type="button" class="btn-md btn-primary">
+        <a href="{% url 'create' %}">Add Files</a>
+      </button>
+      <button type="button" class="btn-md btn-primary">
+        <a href="{% url 'update' pk=user.pk %}">Update Files</a>
+      </button>
+      <button type="button" class="btn-md btn-primary">
+        <a href="{% url 'classify_spam_ham' %}">Predict</a>
+      </button>
+    </div>
+  </body>
+</html>

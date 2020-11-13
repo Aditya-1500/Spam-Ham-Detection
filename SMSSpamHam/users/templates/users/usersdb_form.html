@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Create/Update</title>
+  </head>
+  <body>
+    {% load bootstrap4 %}
+    <h1>
+      {% if not form.instance.pk %}
+          Add Files
+      {% else %}
+          Update Files
+      {% endif %}
+    </h1>
+    <form method="POST">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" class="btn btn-danger" value="Submit">
+    </form>
+  </body>
+</html>
