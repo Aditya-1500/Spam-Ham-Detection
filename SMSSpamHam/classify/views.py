@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .SMS_Ham_Spam import pipeline
+from django.contrib import auth
 import pandas as pd
 from .forms import getFile,getMessage
+from users.models import UsersDB
 
 def handle_uploaded_file(file):
     predictions = []
@@ -22,6 +24,12 @@ def classify_spam_ham(request):
     return render(request,"classify/classify_spam_ham.html",{'f_form':f_form,'m_form':m_form})
 
 def ResultView(request):
+
+    if request.user.is_authenticated:
+        user_id = auth.models.User.objects.filter(username=request.user)[0]
+        file = UsersDB.objects.filter(user=user_id)[0].hamspamtweets_user
+        data = pd.read_csv(file,sep='\t',names=["label", "message"])
+        pipeline.fit(data['message'],data['label'])
 
     if request.method == 'POST':
         form = getFile(request.POST,request.FILES)

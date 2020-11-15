@@ -39,6 +39,3 @@ pipeline = Pipeline([
 ])
 
 pipeline.fit(msg_train,label_train)
-
-predictions = pipeline.predict(msg_test)
-print(classification_report(predictions,label_test))
