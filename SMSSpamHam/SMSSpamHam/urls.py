@@ -24,7 +24,9 @@ urlpatterns = [
     path('',views.HomeView,name="home"),
     path('classify_spam_ham/',views.classify_spam_ham,name='classify_spam_ham'),
     path('result/',views.ResultView,name="result"),
-    path('login/',auth_views.LoginView.as_view(template_name="users/login.html"),name="login"),
+    path('login/',u_views.Login.as_view(),name="login"),
     path('logout/',auth_views.LogoutView.as_view(),name="logout"),
-    path('signup/',u_views.SignUp.as_view(),name="signup")
+    path('signup/',u_views.SignUp.as_view(),name="signup"),
+    path('<int:pk>/update/',u_views.UpdateCustomFiles.as_view(),name="update"),
+    path('<int:pk>/profile/',u_views.UserDetail.as_view(),name="profile"),
 ]

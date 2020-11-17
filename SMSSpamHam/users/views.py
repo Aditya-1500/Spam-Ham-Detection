@@ -22,7 +22,7 @@ class SignUp(CreateView):
             new_user = UsersDB(user=u)
             new_user.save()
 
-            return render(request,self.success_url)
+            return HttpResponseRedirect(self.success_url)
 
         return render(request, self.template_name, {'form': form})
 
@@ -59,13 +59,10 @@ class UpdateCustomFiles(LoginRequiredMixin,UpdateView):
             clear_hst = request.POST.get('hamspamtweets_user-clear', False)
             clear_swu = request.POST.get('spammywordsusers_user-clear', False)
             if clear_su:
-                # print('works')
                 u.spamurl_user = ''
             if clear_hst:
-                # print('works2')
                 u.hamspamtweets_user = ''
             if clear_swu:
-                # print('works3')
                 u.spammywordsusers_user = ''
             u.save()
             print(u.spamurl_user,'-',request.POST['spamurl_user'])
