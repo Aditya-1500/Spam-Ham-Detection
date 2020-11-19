@@ -17,6 +17,26 @@
     </style>
   </head>
   <body>
+    {% load static %}
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Spam-Ham Classification</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav align-items-center ml-auto">
+            {% if user.is_authenticated %}
+            <a class="nav-link nav-item" href="{% url 'classify_spam_ham' %}">Classify</a>
+            <a class="nav-link nav-item" href="{% url 'logout' %}">Log out</a>
+            <a class="nav-link nav-item" href="#">Welcome {{user.username}}</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}" aria-label="Login">
+              <span class="fa fa-user" aria-hidden="true"> Login</span>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
     <div class="container">
       <div class="jumbotron">
         <h1>Spam-Ham Classification</h1>
