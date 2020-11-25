@@ -43,10 +43,10 @@ Spam_urls = pd.DataFrame(spam_urls)
 HSClusters = pd.DataFrame(hsClusters)
 SpammyWordsUsers = pd.DataFrame(spammy_words_users)
 
-Spam_urls.to_csv('SpamUrls.csv',index=False)
-HSClusters.to_csv('Ham_Spam_Clusters.csv',index=False)
-SpammyWordsUsers.to_csv('SpammyWordsUsers.csv',index=False)
+Spam_urls.to_csv('media/SpamUrls.csv',index=False)
+HSClusters.to_csv('media/Ham_Spam_Clusters.csv',index=False)
+SpammyWordsUsers.to_csv('media/SpammyWordsUsers.csv',index=False)
 
-messages.to_csv('HamSpamTweets.csv')
+messages.to_csv('media/HamSpamTweets.csv')
 
     
