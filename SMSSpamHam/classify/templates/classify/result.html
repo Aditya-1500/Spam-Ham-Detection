@@ -7,22 +7,46 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
+    {% load static %}
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="{% url 'home' %}">Spam-Ham Classification</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav align-items-center ml-auto">
+            {% if user.is_authenticated %}
+            <a class="nav-link nav-item" href="{% url 'redirect_profile' %}">Profile <span class="sr-only">(current)</span></a>
+            <a class="nav-link nav-item" href="{% url 'classify_spam_ham' %}">Classify</a>
+            <a class="nav-link nav-item" href="{% url 'logout' %}">Log out</a>
+            <a class="nav-link nav-item" href="#">{{user.username}}</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}" aria-label="Login">
+              <span class="fa fa-user" aria-hidden="true"> Login</span>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
     <div class="container">
       <div class="jumbotron">
         <h1>Spam-Ham Classification</h1>
       </div>
-      <hr color="blue" size=3>
-      <table>
-      {% for p in predictions %}
+      <hr color="blue" size=5 width="50%">
+      <table border="3">
+        <thead align="center">
+          <th>Tweet Description</th>
+          <th>Label</th>
+        </thead>
+      {% for tweet,prediction in predictions %}
         <tr>
-          {% for m in p %}
-            <td>{{m}}</td>
-          {% endfor %}
+          <td width="70%">{{tweet|linebreaksbr}}</td>
+          <td align="center">{{prediction}}</td>
         </tr>
       {% endfor %}
       </table>
       <br>
-      <a href="{% url 'home' %}">
+      <a href="{% url 'classify_spam_ham' %}">
         <button type="button" class="btn btn-danger">Check another!</button>
       </a>
     </div>

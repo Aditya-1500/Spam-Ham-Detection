@@ -13,22 +13,51 @@
     </style>
   </head>
   <body>
+    {% load static %}
+    {% load bootstrap4 %}
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="{% url 'home' %}">Spam-Ham Classification</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav align-items-center ml-auto">
+            {% if user.is_authenticated %}
+            <a class="nav-link nav-item" href="{% url 'redirect_profile' %}">Profile <span class="sr-only">(current)</span></a>
+            <a class="nav-link nav-item" href="{% url 'classify_spam_ham' %}">Classify</a>
+            <a class="nav-link nav-item" href="{% url 'logout' %}">Log out</a>
+            <a class="nav-link nav-item" href="#">{{user.username}}</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}" aria-label="Login">
+              <span class="fa fa-user" aria-hidden="true"> Login</span>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
     <div class="container">
       <div class="jumbotron">
         <h1>Spam-Ham Classification</h1>
       </div>
       <form action="{% url 'result' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <!-- Select File:<input type="file" name="file"> -->
-        <div>
-          <input type="radio" name="options" value="message">Message
-          <input type="radio" name="options" value="file">File
-        </div>
-        <div class="file form">
-          {{ f_form.as_p }}
+        <div class="form-check">
+          <input class="form-check-input" value="message" type="radio" name="options" id="msg-option">
+          <label class="form-check-label" for="msg-option">
+            Check a single tweet
+          </label>
         </div>
         <div class="message form">
-          {{ m_form.as_p }}
+          {% bootstrap_form m_form %}
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" value="file" type="radio" name="options" id="file-option">
+          <label class="form-check-label" for="file-option">
+            Upload a file to check for multiple tweets
+          </label>
+        </div>
+        <div class="file form">
+          {% bootstrap_form f_form %}
         </div>
         <script type="text/javascript">
           $(document).ready(function(){
@@ -40,8 +69,6 @@
                 });
             });
         </script>
-        <!-- Enter Message:
-        <textarea name="message" rows="8" cols="80"></textarea> -->
         <input type="submit" name="submit" value="Predict" class="btn btn-primary btn-lg">
       </form>
     </div>
