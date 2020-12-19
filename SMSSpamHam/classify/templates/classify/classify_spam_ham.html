@@ -42,12 +42,23 @@
       <form action="{% url 'result' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-check">
-          <input class="form-check-input" value="message" type="radio" name="options" id="msg-option">
+          <input class="form-check-input" value="message" type="radio"
+            name="options" id="msg-option" placeholder="Username \nTweet">
           <label class="form-check-label" for="msg-option">
             Check a single tweet
           </label>
         </div>
         <div class="message form">
+          <p>
+          <strong>Enter the tweet in following format:</strong><br>
+          Username<br>
+          Tweet
+          </p>
+          <p>
+          <strong>Example:</strong><br>
+          Jake Peralta<br>
+          An example tweet posted at https://www.examplepage.com
+          </p>
           {% bootstrap_form m_form %}
         </div>
         <div class="form-check">
@@ -57,6 +68,29 @@
           </label>
         </div>
         <div class="file form">
+          <p>
+            <strong>
+              Upload the file in .csv (Comma Separated Values) format only, as per the example below.
+            </strong>
+            <table border="3">
+              <thead>
+                <th>Username</th>
+                <th>Tweet</th>
+              </thead>
+              <tbody>
+                <td>Jake Peralta</td>
+                <td>An example tweet posted at https://www.examplepage.com</td>
+              </tbody>
+              <tbody>
+                <td>Amy Santiago</td>
+                <td>Another example tweet posted at https://www.examplepage.com</td>
+              </tbody>
+              <tbody>
+                <td>Captain Holt</td>
+                <td>Yet another example tweet posted at https://www.examplepage.com as well as http://www.examples.com</td>
+              </tbody>
+            </table>
+          </p>
           {% bootstrap_form f_form %}
         </div>
         <script type="text/javascript">
@@ -69,6 +103,9 @@
                 });
             });
         </script>
+        <p>
+          <strong>*Please Note: Not following the given format may result in unexpected results.</strong>
+        </p>
         <input type="submit" name="submit" value="Predict" class="btn btn-primary btn-lg">
       </form>
     </div>
