@@ -10,4 +10,4 @@ class getFile(forms.Form):
 class getMessage(forms.Form):
     message = forms.CharField(widget=forms.Textarea(
                                     attrs={"placeholder":"Username\nTweet"}),
-                    required=False)
+                                    required=False)
