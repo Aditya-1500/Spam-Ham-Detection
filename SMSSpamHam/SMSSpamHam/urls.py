@@ -16,17 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from classify import views
+from classify import views as c_views
 from users import views as u_views
+from .views import HomeView,ThanksPage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.HomeView,name="home"),
-    path('classify_spam_ham/',views.classify_spam_ham,name='classify_spam_ham'),
-    path('result/',views.ResultView,name="result"),
+    path('',HomeView,name="home"),
+    path('classify_spam_ham/',c_views.classify_spam_ham,name='classify_spam_ham'),
+    path('result/',c_views.ResultView,name="result"),
     path('login/',u_views.Login.as_view(),name="login"),
     path('logout/',auth_views.LogoutView.as_view(),name="logout"),
     path('signup/',u_views.SignUp.as_view(),name="signup"),
     path('<int:pk>/update/',u_views.UpdateCustomFiles.as_view(),name="update"),
     path('<int:pk>/profile/',u_views.UserDetail.as_view(),name="profile"),
+    path('redirect_profile/',u_views.profile_redirect,name="redirect_profile"),
+    path('thanks/',ThanksPage.as_view(),name="thanks")
 ]

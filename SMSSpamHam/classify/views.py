@@ -6,9 +6,9 @@ import re
 from .forms import getFile,getMessage
 from users.models import UsersDB
 
-from .QuotientFilter import QuotientFilter
-from .LSH import LSH
-from .Classifier4 import pipeline
+from Classifiers.QuotientFilter import QuotientFilter
+from Classifiers.LSH import LSH
+from Classifiers.Classifier4 import pipeline
 
 def handle_uploaded_file(file):
     predictions = []

@@ -5,7 +5,9 @@ def validate_file_extension(value):
             raise forms.ValidationError("Only CSV file is accepted")
 
 class getFile(forms.Form):
-    file = forms.FileField(required=False,validators=[validate_file_extension],widget=forms.FileInput(attrs={'accept':'.csv'}))
+    file = forms.FileField(required=False,validators=[validate_file_extension],
+                            widget=forms.FileInput(attrs={'accept':'.csv'})
+                            )
 
 class getMessage(forms.Form):
     message = forms.CharField(widget=forms.Textarea(

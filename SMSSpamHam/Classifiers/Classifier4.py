@@ -41,7 +41,9 @@ class MLModel():
         prediction = self.pipeline.predict([tweet])
         return prediction
 
-
+tweets = pd.read_csv('media/HamSpamTweets.csv')
+pipeline = MLModel(tweets)
+pipeline.train_model()
 # messages = pd.read_csv('smsspamcollection/SMSSpamCollection', sep='\t',names=["label", "message"])
 
 

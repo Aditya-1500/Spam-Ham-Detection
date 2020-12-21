@@ -2,21 +2,23 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>New User</title>
+    <title>Logout</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src= "https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    {% load static %}
   </head>
   <body>
-    {% load bootstrap4 %}
     <div class="container">
-      <h1>SignUp</h1>
-      <form method="post">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" class="btn btn-primary">SignUp</button>
-      </form>
+      <div class="jumbotron">
+        <h1>Logout Successful!</h1>
+      </div>
+      <hr>
+      <a href="{% url 'home' %}">
+        <button type="button" class="btn btn-primary">Go to Home</button>
+      </a>
+      <a href="{% url 'login' %}">
+        <button type="button" class="btn btn-primary">Login Again</button>
+      </a>
     </div>
   </body>
 </html>

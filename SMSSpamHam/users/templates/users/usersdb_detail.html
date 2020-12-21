@@ -3,42 +3,71 @@
   <head>
     <meta charset="utf-8">
     <title>Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src= "https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <style type="text/css">
+      a{
+        text-decoration: none;
+        color: black;
+      }
+    </style>
   </head>
   <body>
     {% load static %}
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="{% url 'home' %}">Spam-Ham Classification</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav align-items-center ml-auto">
+            {% if user.is_authenticated %}
+            <a class="nav-link nav-item" href="{% url 'profile' pk=usersdb.user.pk %}">Profile <span class="sr-only">(current)</span></a>
+            <a class="nav-link nav-item" href="{% url 'classify_spam_ham' %}">Classify</a>
+            <a class="nav-link nav-item" href="{% url 'logout' %}">Log out</a>
+            <a class="nav-link nav-item" href="#">{{user.username}}</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}" aria-label="Login">
+              <span class="fa fa-user" aria-hidden="true"> Login</span>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
     <div class="container">
       <h1>Welcome {{usersdb.user.username}}</h1>
       <hr size=3 color="blue">
       <h2>Spam URLs</h2>
-      {% if spamurl_user.count == 0 %}
+      {% if not usersdb.spamurl_user %}
         <p>File not added.</p>
       {% else %}
         <p>{{usersdb.spamurl_user}}</p>
       {% endif %}
 
       <h2>Ham/Spam Tweets</h2>
-      {% if hamspamtweets_user.count == 0 %}
+      {% if not usersdb.hamspamtweets_user %}
         <p>File not added.</p>
       {% else %}
         <p>{{usersdb.hamspamtweets_user}}</p>
       {% endif %}
 
       <h2>Spammy words and Users</h2>
-      {% if spammywordsusers_user.count == 0 %}
+      {% if not usersdb.spammywordsusers_user %}
         <p>File not added.</p>
       {% else %}
         <p>{{usersdb.spammywordsusers_user}}</p>
       {% endif %}
-
-      <button type="button" class="btn-md btn-primary">
-        <a href="{% url 'create' %}">Add Files</a>
-      </button>
-      <button type="button" class="btn-md btn-primary">
-        <a href="{% url 'update' pk=user.pk %}">Update Files</a>
-      </button>
-      <button type="button" class="btn-md btn-primary">
-        <a href="{% url 'classify_spam_ham' %}">Predict</a>
-      </button>
+      <a href="{% url 'update' pk=usersdb.pk %}">
+        <button type="button" class="btn btn-primary">
+        Add/Update Files
+        </button>
+      </a>
+      <a href="{% url 'classify_spam_ham' %}">
+        <button type="button" class="btn btn-primary">
+        Predict
+        </button>
+      </a>
     </div>
   </body>
 </html>
