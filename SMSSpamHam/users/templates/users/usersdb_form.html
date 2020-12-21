@@ -2,21 +2,123 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Create/Update</title>
+    <title>Update</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src= "https://code.jquery.com/jquery-1.12.4.min.js"></script>
   </head>
   <body>
+    {% load static %}
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="{% url 'home' %}">Spam-Ham Classification</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav align-items-center ml-auto">
+            {% if user.is_authenticated %}
+            <a class="nav-link nav-item" href="{% url 'profile' pk=usersdb.user.pk %}">Profile <span class="sr-only">(current)</span></a>
+            <a class="nav-link nav-item" href="{% url 'classify_spam_ham' %}">Classify</a>
+            <a class="nav-link nav-item" href="{% url 'logout' %}">Log out</a>
+            <a class="nav-link nav-item" href="#">{{user.username}}</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}" aria-label="Login">
+              <span class="fa fa-user" aria-hidden="true"> Login</span>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
     {% load bootstrap4 %}
     <h1>
-      {% if not form.instance.pk %}
-          Add Files
-      {% else %}
-          Update Files
-      {% endif %}
+          Add/Update Files
     </h1>
+    <hr size="5" color="Blue">
+    <h4> <strong> Note: Upload the files in .csv(Comma Separated Values) format only as shown below for proper results </strong> </h4>
+    <table>
+      <tr>
+        <td width="20%">
+          <p>
+            <center> Spam URLs </center>
+            <table border="3" align="center">
+              <thead align="center">
+                <th>url</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>https://www.google.com/</td>
+                </tr>
+                <tr>
+                  <td>https://www.stackoverflow.com/</td>
+                </tr>
+                <tr>
+                  <td>https://www.djangoproject.com/</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+        </td>
+        <td width="60%">
+          <p>
+            <center> Ham Spam Tweets </center>
+            <table border="3" align="center">
+              <thead align="center">
+                <th>Ham</th>
+                <th>Spam</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>World's oldest captive giant panda dies at 38 in China zoo #Panda #GiantPanda #WorldOldestPanda #World Read here: http://bit.ly/37HRT5v</td>
+                  <td>Open this link and get unlimited money. bit.ly/1e2ada5 #Riches #QuickMoney</td>
+                </tr>
+                <tr>
+                  <td>Breaking news alerts from India. Instagram: http://instagram.com/ndtv YouTube: http://youtube.com/ndtv</td>
+                  <td>Visit and vote for your favourite star here. bit.ly/14njfa23 #BestFanArmy #BeTheFan</td>
+                </tr>
+                <tr>
+                  <td>thanks to all crazy ppl out there </td>
+                  <td>Open this link or you will be CURSED !!! http://www.bishop.com/</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+        </td>
+          <td width="20%">
+          <p>
+            <center> Spammy Words and Users </center>
+            <table border="3" align="center">
+              <thead align="center">
+                <th>spam_words</th>
+                <th>spam_users</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Free</td>
+                  <td>Timothy Harvey</td>
+                </tr>
+                <tr>
+                  <td>wkly</td>
+                  <td>Dr. Spammer</td>
+                </tr>
+                <tr>
+                  <td>win</td>
+                  <td>Spammy Dragon</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <hr size=5 color="Blue">
     <form method="POST">
       {% csrf_token %}
       {% bootstrap_form form %}
       <input type="submit" class="btn btn-danger" value="Submit">
+      <a href="{% url 'redirect_profile' %}">
+        <button type="button" name="button" class="btn btn-warning">Back</button>
+      </a>
     </form>
   </body>
 </html>

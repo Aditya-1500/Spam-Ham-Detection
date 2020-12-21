@@ -128,7 +128,7 @@ def ResultView(request):
                 tweet = request.POST['message'].split('\n')
                 predictions = []
                 prediction = predictSH(tweet,qf_urls,lsh,qf_users,qf_words)
-                predictions.append([tweet,prediction])
+                predictions.append(['\n'.join(tweet),prediction])
                 print(tweet)
             return render(request,"classify/result.html",context={'predictions':predictions})
         # else:
@@ -137,6 +137,3 @@ def ResultView(request):
         #     m_form = getMessage()
         #     print(form.errors)
     return render(request,"classify/classify_spam_ham.html",{'f_form':form,'m_form':m_form})
-    # else:
-    #     form = getFile()
-    #     return render(request,"classify/result.html",context={'message':"Hello World",'prediction':"Checking"})

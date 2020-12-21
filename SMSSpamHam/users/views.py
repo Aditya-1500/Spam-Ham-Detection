@@ -6,8 +6,9 @@ from django.contrib.auth.views import LoginView
 from .forms import UserCreateForm, CustomDBForm
 from .models import UsersDB
 from django.contrib.auth.models import User
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Create your views here.
 class SignUp(CreateView):
     form_class = UserCreateForm
@@ -23,7 +24,6 @@ class SignUp(CreateView):
             new_user.save()
 
             return HttpResponseRedirect(self.success_url)
-
         return render(request, self.template_name, {'form': form})
 
 
@@ -35,6 +35,11 @@ class Login(LoginView):
         u = User.objects.filter(pk=self.request.user.pk)[0]
         u = UsersDB.objects.filter(user=u)[0]
         return url or reverse_lazy('profile',kwargs={'pk':u.pk})
+
+def profile_redirect(request):
+    u = UsersDB.objects.filter(user = request.user)[0]
+    return HttpResponseRedirect(reverse('profile',kwargs={'pk':u.pk}))
+
 
 class UserDetail(DetailView,LoginRequiredMixin):
     model = UsersDB
@@ -59,10 +64,13 @@ class UpdateCustomFiles(LoginRequiredMixin,UpdateView):
             clear_hst = request.POST.get('hamspamtweets_user-clear', False)
             clear_swu = request.POST.get('spammywordsusers_user-clear', False)
             if clear_su:
+                # print('works')
                 u.spamurl_user = ''
             if clear_hst:
+                # print('works2')
                 u.hamspamtweets_user = ''
             if clear_swu:
+                # print('works3')
                 u.spammywordsusers_user = ''
             u.save()
             print(u.spamurl_user,'-',request.POST['spamurl_user'])
