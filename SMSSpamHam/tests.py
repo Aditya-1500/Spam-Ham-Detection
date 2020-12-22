@@ -5,15 +5,7 @@ from Classifiers.Classifier4 import pipeline
 import pandas as pd
 
 class ClassifierTest(TestCase):
-        
-        # self.hsClusters = pd.read_csv('media/Ham_Spam_Clusters.csv')
-        # self.lsh = LSH()
-        
-        # hamCl = list(self.hsClusters['Ham'])
-        # spamCl = list(self.hsClusters['Spam'])
-        # self.lsh.update(hamCl,spamCl)
-
-        
+    
     def test_pipeline_prediction(self):
         tweet_ham = "Sorry, I'll call later in meeting."
         tweet_spam = "As a valued customer, I am pleased to advise you that following recent review of your Mob No. you are awarded with a Â£1500 Bonus Prize, call 09066364589"
@@ -51,3 +43,18 @@ class ClassifierTest(TestCase):
         self.assertEqual(self.qf_users.lookup(ham_user),"Ham")
         self.assertEqual(self.qf_words.lookup(spammy_word),"Spam")
         self.assertEqual(self.qf_words.lookup(ham_word),"Ham")
+
+    def test_lsh(self):
+        self.hsClusters = pd.read_csv('media/Ham_Spam_Clusters.csv')
+        self.lsh = LSH()
+        
+        hamCl = list(self.hsClusters['Ham'])
+        spamCl = list(self.hsClusters['Spam'])
+        self.lsh.update(hamCl,spamCl)
+
+        tweet_ham = "Sorry, I'll call later in meeting."
+        tweet_spam = "As a valued customer, I am pleased to advise you that following recent review of your Mob No. you are awarded with a Â£1500 Bonus Prize, call 09066364589"
+        
+        self.assertEqual(self.lsh.query(tweet_ham),"Ham")
+        self.assertEqual(self.lsh.query(tweet_spam),"Spam")
+        
