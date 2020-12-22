@@ -19,7 +19,7 @@ class QuotientFilter:
         self.p = 2**16       #Number of buckets
         self.q = 16          
         self.r = 16
-        for _ in range(self.p):
+        for i in range(self.p):
             #Three bits for each bucket
             #is_occupied, is_continuation, is_shifted
             self.qf.append([[0,0,0],-1])
@@ -58,9 +58,9 @@ class QuotientFilter:
             idx -= 1
         	
         	#Find the start of run for quotient
-        while countOccupied > 0 and idx < 8:
+        while countOccupied > 0 and idx < self.p:
             idx += 1
-            idx = idx%8
+            idx = idx%self.p
             if self.qf[idx][0][1] == 0:
                 countOccupied -= 1
         	
@@ -97,7 +97,7 @@ class QuotientFilter:
         remainder = fingerprint % (2**self.r)
         
         #If key is already 'probably present'
-        if self.lookup(key) == 'Ham':
+        if self.lookup(key) == 'Spam':
             return
         
         #If the quotient is not present and we are at start of cluster i.e. no collision, directly insert the key.
@@ -117,12 +117,12 @@ class QuotientFilter:
         	#Quotient is present but there are already fingerprints with same quotient (soft collision)
             idx = quotient
             countOccupied = 0
-        	#Find the start of cluster and then start of run for quotient
+        		#Find the start of cluster and then start of run for quotient
             while self.qf[idx][0] != [1,0,0]:
                 if self.qf[idx][0][0] == 1:
                     countOccupied += 1
                 idx -= 1
-            while countOccupied > 0 and idx < 8:
+            while countOccupied > 0 and idx < self.p:
                 idx += 1
                 if self.qf[idx][0][1] == 0:
                     countOccupied -= 1
@@ -134,7 +134,7 @@ class QuotientFilter:
                     #Move right
                     while self.qf[idx][1] < remainder and self.qf[idx][0] != [0,0,0]:
                         idx += 1
-                        idx = idx % 8
+                        idx = idx % self.p
                     if self.qf[idx][0] == [0,0,0]:
                         self.qf[idx][0][1:] = [1,1]
                         self.qf[idx][1] = remainder
@@ -144,7 +144,7 @@ class QuotientFilter:
                         self.qf[idx][0][1:] = [1,0]
                         self.qf[idx][1] = remainder
                         idx += 1
-                        idx = idx % 8
+                        idx = idx % self.p
                         while self.qf[idx][0] != [0,0,0]:
                             temp1 = self.qf[idx]
                             self.qf[idx][0][1] = temp[0][1]
@@ -152,7 +152,7 @@ class QuotientFilter:
                             self.qf[idx][1] = temp[1]
                             temp = temp1
                             idx += 1
-                            idx = idx % 8
+                            idx = idx % self.p
                         self.qf[idx][0][1] = temp[0][1]
                         self.qf[idx][0][2] = 1
                         self.qf[idx][1] = temp[1]
@@ -163,7 +163,7 @@ class QuotientFilter:
                     self.qf[idx][0][1:] = [0,0]
                     self.qf[idx][1] = remainder
                     idx += 1
-                    idx = idx % 8
+                    idx = idx % self.p
                     while self.qf[idx][0] != [0,0,0]:
                         temp1 = copy.deepcopy(self.qf[idx])
                         self.qf[idx][0][1] = temp[0][1]
@@ -171,7 +171,7 @@ class QuotientFilter:
                         self.qf[idx][1] = temp[1]
                         temp = copy.deepcopy(temp1)
                         idx += 1
-                        idx = idx % 8
+                        idx = idx % self.p
                     self.qf[idx][0][1] = temp[0][1]
                     self.qf[idx][0][2] = 1
                     self.qf[idx][1] = temp[1]
