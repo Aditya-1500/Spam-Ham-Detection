@@ -1,0 +1,12 @@
+bootstrap4==0.1.0
+datasketch==1.5.1
+Django==3.0.6
+django-bootstrap4==2.0.1
+Faker==4.1.0
+mmh3==2.5.1
+nltk==3.4.5
+numpy==1.16.4
+pandas==0.24.2
+pylint==2.3.1
+scikit-learn==0.21.2
+scipy==1.4.1
