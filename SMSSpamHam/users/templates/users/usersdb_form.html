@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav align-items-center ml-auto">
             {% if user.is_authenticated %}
-            <a class="nav-link nav-item" href="{% url 'profile' pk=usersdb.user.pk %}">Profile <span class="sr-only">(current)</span></a>
+            <a class="nav-link nav-item" href="{% url 'redirect_profile' %}">Profile <span class="sr-only">(current)</span></a>
             <a class="nav-link nav-item" href="{% url 'classify_spam_ham' %}">Classify</a>
             <a class="nav-link nav-item" href="{% url 'logout' %}">Log out</a>
             <a class="nav-link nav-item" href="#">{{user.username}}</a>
