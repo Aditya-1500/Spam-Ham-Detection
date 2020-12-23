@@ -76,7 +76,16 @@ $ cd Spam-Ham-Detection\SMSSpamHam
 $  pip install -r requirements.txt
 ```
 
-**5. Now Run Server**
+**5. Set Allowed Hosts**
+
+- Go to settings.py.
+- Add '\*' to allowed hosts.
+```python
+ALLOWED_HOSTS = ['*']
+```
+No need to change in Mac
+
+**6. Now Run Server**
 
 Command for Windows:
 ```python
